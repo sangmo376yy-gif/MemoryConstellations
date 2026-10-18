@@ -95,6 +95,10 @@ router.post('/messages', (req, res) => {
     // 默认 chat_id=1（若没有独立 chat 概念）
     const chatId = body.chat_id ?? body.group_id ?? 1;
 
+    // messages.chat_id 有外键，chats 里没这行 → 插入直接 FOREIGN KEY constraint failed（线上 500）。
+    // 外部接入方只发消息、不会先建 chat，这里补一行（已存在就跳过）。
+    db.prepare('INSERT OR IGNORE INTO chats (id, name) VALUES (?, ?)').run(chatId, 'lin111');
+
     const insert = db.prepare(`
         INSERT INTO messages (chat_id, sender, content, timestamp, is_encrypted, message_type, status)
         VALUES (?, ?, ?, ?, 0, 'text', 'sent')
