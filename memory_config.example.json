@@ -1,0 +1,51 @@
+{
+  "user": {
+    "name": "User",
+    "pronoun": "TA",
+    "short_desc": "Your name, age, and a one-line description."
+  },
+  "ai": {
+    "name": "Companion",
+    "pronoun": "TA",
+    "core_traits": "Write your companion's personality traits here.",
+    "persona_note": "Write your companion's persona background here."
+  },
+  "relationship": {
+    "type": "companion",
+    "user_role": "{{user.name}} is {{ai.name}}'s conversation partner.",
+    "ai_feelings": "Describe how {{ai.name}} feels about {{user.name}}.",
+    "dynamic": "Describe the dynamic between {{user.name}} and {{ai.name}}."
+  },
+  "project": {
+    "name": "My Project",
+    "features": []
+  },
+  "ui": {
+    "user_color": "#ffe0aa",
+    "ai_color": "#aae6c8"
+  },
+  "rhythm": {
+    "_comment": "Minutes of user inactivity before deep memory integration runs. Default 60.",
+    "deep_cycle_idle_minutes": 60
+  },
+  "pipeline": {
+    "_comment": "Safe rollout defaults. Switch only after focused tests and a real end-to-end acceptance run.",
+    "mode": "legacy",
+    "chat_read_mode": "legacy",
+    "semantic_maintenance": "backfill",
+    "persona_writer": {
+      "enabled": false,
+      "provider": "",
+      "model": ""
+    }
+  },
+  "librarian": {
+    "_comment": "Exclude specific fragment sources from search results.",
+    "exclude_sources": []
+  },
+  "tag_routing": {
+    "_comment": "按值标自动建星座：提取时打的标 → 一颗专门的星座（代码直连，不靠分类器）。可选值跑 scripts/list_tag_routing.js 看。不填 = 一颗都不建。",
+    "_example": "intimacy -> 亲密时刻, health -> 健康"
+  },
+  "source_routing": {}
+}
