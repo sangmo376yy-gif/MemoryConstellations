@@ -95,11 +95,16 @@ const requireIngestToken = (req, res, next) => {
   return res.status(401).json({ success: false, error: 'unauthorized' });
 };
 
+// 注意：不能写成 app.use('/api', requireIngestToken, router) —— 那样每个 /api 请求
+// 都会先过这道闸（连 /api/health 都 401）。闸只挂在两条路径上。
+app.use('/api/messages', requireIngestToken);
+app.use('/api/recall', requireIngestToken);
+
 // ── Chat ingest API（接收外部机器人消息，攒记忆）──
-app.use('/api', requireIngestToken, require('./routes/ingest'));
+app.use('/api', require('./routes/ingest'));
 
 // ── Memory recall API（外部机器人回复前查记忆）──
-app.use('/api', requireIngestToken, require('./routes/recall'));
+app.use('/api', require('./routes/recall'));
 
 // ── Health check (contains counts and modes only; never returns memory content) ──
 app.use('/api', require('./routes/health'));
